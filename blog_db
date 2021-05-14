@@ -1,0 +1,28 @@
+import sqlite3
+
+connection = sqlite3.connect('blog_db.db')
+
+
+with open('schema.sql') as f:
+    connection.executescript(f.read())
+
+cur = connection.cursor()
+
+cur.execute("INSERT INTO posts (title, content) VALUES (?, ?)",
+            ('Madrid', 'Madrid is an energetic city known for its late nights, historic sites,'
+                           ' and delicious cuisine. As the capital of Spain, '
+                           'there’s also a lot of history and art here, '
+                           'which you could spend weeks discovering. '
+                           'It’s also bursting with beautiful architecture.'
+                           ' There’s an endless number of things to see and do in this metropolis.')
+            )
+
+cur.execute("INSERT INTO posts (title, content) VALUES (?, ?)",
+            ('Rome', 'Rome is a city that sparks a thousand mental images. '
+                     'From ancient structures like the Colosseum or the Pantheon,'
+                     ' to the Spanish Steps and Trevi Fountain, to the Vatican — '
+                     'not to mention tons of pasta and other delicious food — it has it all.')
+            )
+
+connection.commit()
+connection.close()
